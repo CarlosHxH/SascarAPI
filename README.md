@@ -30,3 +30,5 @@
         except Exception as e:
             print(f"Erro: {str(e)}")
 
+## Biblioteca api sascar com ssl para python
+### Em Desenvolvimento
