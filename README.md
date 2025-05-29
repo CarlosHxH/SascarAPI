@@ -1,5 +1,5 @@
 # Exemplo de uso da API
-´´´
+
 
     if __name__ == "__main__":
         # Configurações de conexão
@@ -25,4 +25,3 @@
         except Exception as e:
         print(f"Erro: {str(e)}")
 
-´´´
