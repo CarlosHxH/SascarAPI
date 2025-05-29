@@ -1,5 +1,4 @@
 from datetime import datetime
-import os
 import pandas as pd
 from zeep import Client, Settings
 from zeep.transports import Transport
@@ -521,6 +520,7 @@ class SascarAPI:
         return str(data_zeep)
 
 
+"""
 # Exemplo de uso da API
 if __name__ == "__main__":
     # Configurações de conexão
@@ -545,3 +545,4 @@ if __name__ == "__main__":
         
     except Exception as e:
         print(f"Erro: {str(e)}")
+"""
