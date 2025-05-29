@@ -2,9 +2,9 @@
 ´´´
 if __name__ == "__main__":
     # Configurações de conexão
-    WSDL_URL = 'https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl'
-    USERNAME = os.getenv('USERNAME')
-    PASSWORD = os.getenv('PASSWORD')
+    WSDL_URL = "https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl"
+    USERNAME = os.getenv("USERNAME")
+    PASSWORD = os.getenv("PASSWORD")
     
     try:
         # Criar instância da API
