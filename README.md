@@ -1,11 +1,16 @@
 # Exemplo de uso da API
 
 
+    import os
+    from sascar import SascarAPI
+
+
+    # Exemplo de uso da API
     if __name__ == "__main__":
         # Configurações de conexão
-        WSDL_URL = "https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl"
-        USERNAME = os.getenv("USERNAME")
-        PASSWORD = os.getenv("PASSWORD")
+        WSDL_URL = 'https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl'
+        USERNAME = os.getenv('USERNAME')
+        PASSWORD = os.getenv('PASSWORD')
         
         try:
             # Criar instância da API
@@ -23,5 +28,5 @@
             sascar.export(veiculos, 'veiculos', 'csv')
             
         except Exception as e:
-        print(f"Erro: {str(e)}")
+            print(f"Erro: {str(e)}")
 
