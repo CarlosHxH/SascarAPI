@@ -28,7 +28,7 @@ class SascarAPI:
         self.username = username
         self.password = password
         self.client = self.configurar_cliente_sascar()
-    # OK
+    
     def configurar_cliente_sascar(self):
         """Configura e retorna o cliente SOAP para a API Sascar com conexão segura"""
         try:
@@ -66,7 +66,7 @@ class SascarAPI:
             return Client(self.wsdl_url, settings=settings, transport=transport)
         except Exception as e:
             raise Exception(f"Erro ao configurar cliente SOAP seguro: {str(e)}")
-    # OK
+    
     def zeep_to_dict(self, zeep_obj):
         """
         Converte um objeto Zeep para dicionário Python
@@ -193,7 +193,7 @@ class SascarAPI:
         except Fault as e:
             raise Exception(f"Erro ao obter grupo de atuadores: {str(e)}")
     
-    def obter_clientes(self, quantidade=1, id_cliente=0):
+    def obterClientes(self, quantidade=1, id_cliente=0):
         """
         Obtém informações sobre os clientes
         
@@ -246,7 +246,7 @@ class SascarAPI:
         if attrs:
             print(f"{indent}Atributos públicos: {attrs[:10]}...")  # Mostrar apenas os primeiros 10
 
-    # OK
+    
     def obterVeiculos(self, json_format=False, debug=False):
         """
         Obtém informações sobre os veículos
@@ -273,7 +273,7 @@ class SascarAPI:
                     senha=self.password,
                     quantidade=0,
                 )
-                        # Verificar se há dados
+                # Verificar se há dados
                 if response:
                     print(f"Total de veículos encontrados: {len(response)}")
                 
@@ -288,7 +288,8 @@ class SascarAPI:
         except Fault as e:
             raise Exception(f"Erro ao obter veículos: {str(e)}")
 
-    def obter_pacotes_posicoes(self, quantidade=0, motorista=False, com_placa=False):
+
+    def obterPacotePosicoes(self, quantidade=3000, motorista=False, com_placa=False):
         """
         Obtém pacotes de posições dos veículos
         
@@ -382,7 +383,7 @@ class SascarAPI:
         except Fault as e:
             raise Exception(f"Erro ao obter pacotes de posições por range: {str(e)}")
 
-    # OK
+    
     def obterStatusComando(self, ticket=None, ticket_sascar=False):
         """
         Obtém o status de um comando enviado
@@ -412,9 +413,19 @@ class SascarAPI:
         except Fault as e:
             raise Exception(f"Erro ao obter status do comando: {str(e)}")
     
-    # OK
+    
     def obterEventoTelemetriaIntegracao(self, idVeiculo, dataInicio, dataFinal):
-        """Obtém eventos de telemetria para um veículo em um intervalo específico"""
+        """
+        Obtém eventos de telemetria para um veículo em um intervalo específico
+        
+        Args:
+            idVeiculo (int): Número do ticket do comando
+            dataInicio (str): Data de início no formato 'YYYY-MM-DD HH:MM:SS'
+            dataFinal (str): Data final no formato 'YYYY-MM-DD HH:MM:SS'
+            
+        Returns:
+            list: Lista de dicionários com eventos telemetria
+        """
         try:
             if not all([idVeiculo, dataInicio, dataFinal]):
                 raise ValueError('Parametros pendentes')
@@ -437,17 +448,19 @@ class SascarAPI:
         except Exception as e:
             raise Exception(f"Erro ao obter eventos de telemetria: {str(e)}")
         
-    # OK
+    
     def obterEventoTelemetriaIntegracaoDataChegada(self, idVeiculo, dataInicio=None, dataFinal=None,idEventoList=None):
         """
         Obtém eventos de telemetria
         
         Args:
+            idVeiculo (int): Número do ID do veiculo
+            idEventoList (int): Número do ID do evento
             data_inicio (str, optional): Data de início no formato 'YYYY-MM-DD HH:MM:SS'
             data_final (str, optional): Data final no formato 'YYYY-MM-DD HH:MM:SS'
             
         Returns:
-            list: Lista de dicionários com eventos de telemetria
+            list: Lista de dicionários com eventos de telemetria data chegada
         """
         try:
             if not all([idVeiculo, dataInicio, dataFinal]):
@@ -469,14 +482,22 @@ class SascarAPI:
                 dataChegadaFinal=dataFinal,
                 idEventoList=idEventoList,
             )
-            #return response or []
             return self.process_response(response)
         except Exception as e:
             raise Exception(f"Erro ao obter eventos de telemetria: {str(e)}")
     
-    # OK
     def obterDeltaTelemetriaIntegracao(self, idVeiculo, dataInicio, dataFinal):
-        """Obtém todos os Delta Telemetria disponíveis"""
+        """
+        Obtém todos os Delta Telemetria disponíveis
+        
+        Args:
+            idVeiculo (int): Número do ID do veiculo
+            data_inicio (str, optional): Data de início no formato 'YYYY-MM-DD HH:MM:SS'
+            data_final (str, optional): Data final no formato 'YYYY-MM-DD HH:MM:SS'
+            
+        Returns:
+            list: Lista de dicionários com eventos de telemetria integração
+        """
         try:
             resultado = self.client.service.obterDeltaTelemetriaIntegracao(
                 usuario=self.username,
@@ -489,15 +510,22 @@ class SascarAPI:
         except Exception as e:
             raise Exception(f"Erro ao obter Delta Telemetria Integracao: {str(e)}")
     
-    # ERROR
+    # Em desenvolvimento
     def to_excel_multisheet(self, data_dict, nome_arquivo):
         """Exporta múltiplos conjuntos de dados para planilhas diferentes"""
         with pd.ExcelWriter(nome_arquivo) as writer:
             for sheet_name, data in data_dict.items():
                 pd.DataFrame(data).to_excel(writer, sheet_name=sheet_name, index=False)
-    # OK
-    def export(self, data, nome_arquivo, formato='excel'or'csv'or'json'):
-        """Exporta dados em múltiplos formatos"""
+    
+    def export(self, data, nome_arquivo="file", formato='excel'or'csv'or'json'):
+        """
+        Exporta dados em múltiplos formatos
+        
+        Args:
+            data (str): dados que serão exportados
+            nome_arquivo (str, optional): Nome do arquivo que será exportado, nome padrão 'file'
+            formato (str, 'excel'|'csv'|'json', optional): formato de exportação do arquivo
+        """
         if formato == 'excel':
             """Exporta os dados para um arquivo Excel"""
             #return self.to_excel(data, nome_arquivo+".xlsx")
@@ -518,31 +546,3 @@ class SascarAPI:
         if isinstance(data_zeep, datetime):
             return data_zeep.strftime('%Y-%m-%d %H:%M:%S')
         return str(data_zeep)
-
-
-"""
-# Exemplo de uso da API
-if __name__ == "__main__":
-    # Configurações de conexão
-    WSDL_URL = 'https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl'
-    USERNAME = os.getenv('USERNAME')
-    PASSWORD = os.getenv('PASSWORD')
-    
-    try:
-        # Criar instância da API
-        sascar = SascarAPI( USERNAME, PASSWORD)
-        
-        print("\n=== METODOS ===")
-        # Lista de Exemplo
-        veiculos = sascar.obterVeiculos()
-        #deltaTelemetria = sascar.obterDeltaTelemetriaIntegracao(1231226,'2025-05-20 00:00:00', '2025-05-20 12:59:59')
-        #eventosTelemetria = sascar.obterEventoTelemetriaIntegracao(1231226,'2025-05-20 00:00:00', '2025-05-20 12:59:59')
-        #telemetriaDataChegada = sascar.obterEventoTelemetriaIntegracaoDataChegada(1231226,'2025-05-21 00:00:00', '2025-05-21 23:59:59')
-        #obterStatusComando = sascar.obterStatusComando(0)
-        #print('telemetria',veiculos[:1])
-        #obterPacote = sascar.obterPacotePosicaoMotoristaPorRangeJSON(0, 0)
-        sascar.export(veiculos, 'veiculos', 'csv')
-        
-    except Exception as e:
-        print(f"Erro: {str(e)}")
-"""

@@ -4,11 +4,9 @@
     import os
     from sascar import SascarAPI
 
-
-    # Exemplo de uso da API
+    # Exemplo de uso da Biblioteca
     if __name__ == "__main__":
         # Configurações de conexão
-        WSDL_URL = 'https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl'
         USERNAME = os.getenv('USERNAME')
         PASSWORD = os.getenv('PASSWORD')
         
@@ -31,4 +29,5 @@
             print(f"Erro: {str(e)}")
 
 ## Biblioteca api sascar com ssl para python
+
 ### Em Desenvolvimento
