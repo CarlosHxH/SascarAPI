@@ -5,8 +5,8 @@ from sascar import SascarAPI
 # Exemplo de uso da API
 if __name__ == "__main__":
     # Configurações de conexão
-    USERNAME = os.getenv('USERNAME')
-    PASSWORD = os.getenv('PASSWORD')
+    USERNAME = os.getenv('SASCAR_USERNAME')
+    PASSWORD = os.getenv('SASCAR_PASSWORD')
     
     try:
         # Criar instância da API

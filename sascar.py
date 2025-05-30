@@ -13,7 +13,7 @@ import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 class SascarAPI:
-    def __init__(self, username, password):
+    def __init__(self, SASCAR_USERNAME, SASCAR_PASSWORD):
         """
         Inicializa a conexão com o Web Service Sascar
         
@@ -21,12 +21,12 @@ class SascarAPI:
             username (str): Nome de usuário para autenticação
             password (str): Senha para autenticação
         """
-        if not username or not password:
+        if not SASCAR_USERNAME or not SASCAR_PASSWORD:
             raise Exception('ERROR', 'username or password not defined')
 
         self.wsdl_url = 'https://sasintegra.sascar.com.br/SasIntegra/SasIntegraWSService?wsdl'
-        self.username = username
-        self.password = password
+        self.username = SASCAR_USERNAME
+        self.password = SASCAR_PASSWORD
         self.client = self.configurar_cliente_sascar()
     
     def configurar_cliente_sascar(self):
